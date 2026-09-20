@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoonNet · Educational Loon Games</title>
+<meta name="description" content="Four short browser games about the common loon's year on the Whitefish Chain, built by Humanitarians AI volunteers for the National Loon Center.">
+<meta property="og:title" content="LoonNet · Educational Loon Games">
+<meta property="og:description" content="Play four interactive games about the common loon, its annual cycle, habitat, and conservation.">
+<meta property="og:image" content="/loonnet-hero.jpg">
+<style>
+  :root{--ink:#1B1B1B;--red:#7A0000;--mist:#797C7F;--silver:#8F8F8F;--muted:#faf8f4;--bg:#fff}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+  a{color:inherit}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  .hero{position:relative;min-height:520px;display:flex;align-items:center;background:#020617 url(/loonnet-hero.jpg) center 20%/cover no-repeat;color:#fff;padding:72px 0}
+  .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,6,23,.95),rgba(2,6,23,.75) 50%,rgba(2,6,23,.15))}
+  .hero .wrap{position:relative;max-width:900px}
+  .kicker{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#d1fae5;margin:0 0 .6rem}
+  .hero h1{font-size:clamp(3rem,8vw,5rem);margin:0 0 1rem;letter-spacing:-.03em}
+  .hero p{max-width:34rem;font-size:1.15rem;color:#e2e8f0}
+  section{padding:56px 0}
+  .alt{background:var(--muted)}
+  .card{background:var(--bg);border:1px solid #e5e2dc;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+  .banner{display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:28px;margin-bottom:40px}
+  .banner h2{margin:.2rem 0 .4rem;font-size:1.5rem}
+  .banner p{margin:0;color:var(--mist);font-size:.95rem;max-width:44rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;text-decoration:none;font-weight:600;font-size:.9rem;padding:.65rem 1.4rem;border-radius:6px;border:0;cursor:pointer}
+  .btn:hover{background:#600000}
+  h2.sec{font-size:2rem;margin:0 0 .5rem}
+  .lead{color:var(--mist);max-width:44rem;margin:0 0 32px}
+  .grid{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .game{overflow:hidden;transition:transform .15s,box-shadow .15s}
+  .game:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.12)}
+  .game button{all:unset;display:block;width:100%;cursor:pointer}
+  .shot{position:relative;aspect-ratio:16/10;background:#000}
+  .shot img{width:100%;height:100%;object-fit:cover;display:block}
+  .season{position:absolute;left:14px;top:14px;color:#fff;font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .7rem;border-radius:999px}
+  .game .body{padding:22px}
+  .game h3{margin:0 0 .4rem;font-size:1.4rem}
+  .game p{margin:0 0 1rem;color:var(--mist);font-size:.92rem}
+  .credit{margin:28px auto 0;max-width:60rem;text-align:center;font-size:.78rem;font-style:italic;color:var(--mist)}
+  .three{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));text-align:left;margin-top:32px}
+  .three div{padding:22px}
+  .three h3{margin:0 0 .4rem;font-size:1.05rem}
+  .three p{margin:0;color:var(--mist);font-size:.92rem}
+  footer{border-top:1px solid #e5e2dc;padding:24px 0;font-size:.85rem;color:var(--mist)}
+  /* modal */
+  .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.8);padding:12px}
+  .modal[open]{display:flex}
+  .frame{display:flex;flex-direction:column;width:100%;max-width:1152px;height:92vh;background:#fff;border-radius:12px;overflow:hidden}
+  .bar{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #e5e2dc}
+  .bar h2{flex:1;margin:0;font-size:1.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar a{font-size:.85rem}
+  .bar .x{all:unset;cursor:pointer;width:38px;height:38px;display:grid;place-items:center;border:1px solid #e5e2dc;border-radius:6px;font-size:1.2rem}
+  .frame iframe{flex:1;border:0;background:#000;width:100%}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Humanitarians AI × National Loon Center</p>
+    <h1>LoonNet</h1>
+    <p>A browser-based learning and conservation initiative that turns the common loon's annual cycle into interactive stories. Each experience connects to real field research on the Whitefish Chain.</p>
+  </div>
+</header>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="card banner">
+      <div>
+        <p class="kicker" style="color:var(--mist)">Explore the project</p>
+        <h2>Inside LoonNet</h2>
+        <p>The vision behind LoonNet, its game chapters, conservation goals, field-research connections, and the tools being developed for learning and stewardship.</p>
+      </div>
+      <a class="btn" href="/project/index.html">View project details ↗</a>
+    </div>
+
+    <h2 class="sec">A year on the Chain</h2>
+    <p class="lead">Each short chapter turns one biological fact into a playable consequence, from choosing a spring nest site to making the fall takeoff. Play in your browser with no installation required.</p>
+
+    <div class="grid" id="games"></div>
+    <p class="credit">Developed based on concepts and chapters from <em>Generative AI for Game Development: Crafting Narrative Worlds with Machines</em> by Shesh Narayan Gupta · DOI: 10.1007/979-8-8688-2439-5</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="text-align:center;max-width:900px">
+    <h2 class="sec">Games are the front door</h2>
+    <p class="lead" style="margin:0 auto">LoonNet connects museum-floor learning with conservation work: interactive chapters paired with seasonal drone, acoustic, and underwater field capture, plus practical tools for annotation, loon detection and counting, habitat-change review, and responsible sharing.</p>
+    <div class="three">
+      <div class="card"><h3>Play a consequence</h3><p>Visitors learn why nesting height, water clarity, boat wakes, and open water matter by making decisions rather than reading labels alone.</p></div>
+      <div class="card"><h3>Work with real observations</h3><p>Whitefish Chain footage and annotated imagery connect the public-facing experience to the actual lakes, birds, habitats, and seasonal conditions.</p></div>
+      <div class="card"><h3>Build tools the Center can keep</h3><p>Usable, reviewable tools for non-technical teams, with transparent results and human expertise kept in the decision loop.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">A volunteer project of <a href="https://www.humanitarians.ai">Humanitarians AI</a>, a Massachusetts 501(c)(3).</div></footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="frame">
+    <div class="bar">
+      <span class="season" id="m-season" style="position:static"></span>
+      <h2 id="m-title"></h2>
+      <a id="m-open" href="#" target="_blank" rel="noopener">Open full screen ↗</a>
+      <button class="x" id="m-close" aria-label="Close game">×</button>
+    </div>
+    <iframe id="m-frame" title="" allow="autoplay; fullscreen; gamepad"></iframe>
+  </div>
+</div>
+
+<script>
+const GAMES = [
+  {id:"nest-site", title:"Nest Site", season:"Spring", accent:"#3E8B5F",
+   desc:"Choose a safe shoreline nesting site. Place it too high and a loon cannot reach it; place it too low and boat wake can swamp it. Discover how artificial nesting platforms can help."},
+  {id:"deep-dive", title:"Deep Dive", season:"Summer", accent:"#2F6F63",
+   desc:"Dive to feed loon chicks through a season of changing water clarity. Learn why clear water matters to sight-hunting loons and why lead tackle is such a serious hazard."},
+  {id:"runway", title:"Runway", season:"Fall", accent:"#A96A16",
+   desc:"Help a loon build enough speed across open water to become airborne. Learn why loons need a long aquatic runway and how birds can become stranded on wet pavement."},
+  {id:"chick-taxi", title:"Chick Taxi", season:"Standalone", accent:"#5E6C6F",
+   desc:"Balance and collect while young chicks ride safely on a parent's back, in a simple browser game designed for the youngest visitors."}
+];
+const grid = document.getElementById("games");
+for (const g of GAMES) {
+  const el = document.createElement("article");
+  el.className = "card game";
+  el.innerHTML = `<button type="button" aria-label="Play ${g.title}">
+    <div class="shot"><img src="/screenshots/${g.id}.jpg" alt="${g.title} game preview" loading="lazy"><span class="season" style="background:${g.accent}">${g.season}</span></div>
+    <div class="body"><h3>${g.title}</h3><p>${g.desc}</p><span class="btn">Play game</span></div></button>`;
+  el.querySelector("button").addEventListener("click", () => openGame(g));
+  grid.appendChild(el);
+}
+const modal = document.getElementById("modal"), frame = document.getElementById("m-frame");
+function openGame(g) {
+  const url = `/${g.id}/index.html`;
+  document.getElementById("m-title").textContent = g.title;
+  const s = document.getElementById("m-season"); s.textContent = g.season; s.style.background = g.accent;
+  document.getElementById("m-open").href = url;
+  frame.title = g.title; frame.src = url;
+  modal.setAttribute("open", ""); document.body.style.overflow = "hidden";
+  history.replaceState(null, "", "#" + g.id);
+}
+function closeGame() {
+  modal.removeAttribute("open"); frame.src = "about:blank"; document.body.style.overflow = "";
+  history.replaceState(null, "", location.pathname);
+}
+document.getElementById("m-close").addEventListener("click", closeGame);
+modal.addEventListener("mousedown", e => { if (e.target === modal) closeGame(); });
+window.addEventListener("keydown", e => { if (e.key === "Escape" && modal.hasAttribute("open")) closeGame(); });
+const want = GAMES.find(g => "#" + g.id === location.hash); if (want) openGame(want);
+</script>
+</body>
+</html>
