@@ -83,6 +83,15 @@
   .bar a{font-size:.85rem}
   .bar .x{cursor:pointer;width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);background:#fff;border-radius:8px;font-size:1.25rem}
   .frame iframe{flex:1;border:0;background:#000;width:100%}
+  .frame iframe[hidden]{display:none}
+  .webgl{flex:1;overflow:auto;padding:28px 24px;background:#fff}
+  .webgl h3{margin:0 0 .4rem;font-size:1.4rem}
+  .webgl p{margin:0 0 1rem;color:var(--mist)}
+  .webgl dl{margin:0;display:grid;gap:14px}
+  .webgl dt{font-weight:700}
+  .webgl dd{margin:.2rem 0 0;color:var(--mist);font-size:.95rem}
+  .webgl code{background:var(--muted);border:1px solid #e5e2dc;border-radius:4px;padding:0 .3em;font-size:.9em}
+  .req{margin:14px 0 0;font-size:.85rem;color:var(--mist)}
   :focus-visible{outline:3px solid #d39b45;outline-offset:3px}
   @media(max-width:760px){
     .wrap{width:min(100% - 28px,1160px)}
@@ -145,6 +154,7 @@
     <p class="lead">Each short chapter turns one biological fact into a playable consequence, from choosing a spring nest site to making the fall takeoff. Play in your browser with no installation required.</p>
 
     <div class="grid" id="games"></div>
+    <p class="req">The games need WebGL2, which every current browser has on by default. If a game shows an error instead of a lake, the player will tell you how to turn it on.</p>
     <p class="credit">Developed based on concepts and chapters from <em>Generative AI for Game Development: Crafting Narrative Worlds with Machines</em> by Shesh Narayan Gupta · DOI: 10.1007/979-8-8688-2439-5</p>
   </div>
 </section>
@@ -192,6 +202,22 @@
       <a id="m-open" href="#" target="_blank" rel="noopener">Open full screen ↗</a>
       <button class="x" id="m-close" aria-label="Close game">×</button>
     </div>
+    <div class="webgl" id="m-webgl" hidden>
+      <h3>This game needs WebGL2</h3>
+      <p>Your browser is reporting that WebGL2 is turned off. It is on by default in every current browser, so one of these usually fixes it. Reload this page afterwards.</p>
+      <dl>
+        <dt>Chrome</dt>
+        <dd>Settings → System → turn on <b>Use graphics acceleration when available</b> → Relaunch. If it is already on, open <code>chrome://gpu</code> and check the WebGL2 line; an extension that blocks fingerprinting may be disabling it, so try an Incognito window.</dd>
+        <dt>Edge</dt>
+        <dd>Settings → System and performance → turn on <b>Use graphics acceleration when available</b> → Restart.</dd>
+        <dt>Firefox</dt>
+        <dd>Settings → General → Performance → untick <b>Use recommended performance settings</b> → tick <b>Use hardware acceleration when available</b>. If it still fails, open <code>about:config</code> and make sure <code>webgl.disabled</code> is <b>false</b>.</dd>
+        <dt>Safari</dt>
+        <dd>Safari 15 and later has WebGL2 on by default; update macOS or iOS if you are older than that. On older versions: Safari → Settings → Advanced → Show Develop menu, then Develop → Experimental Features → <b>WebGL 2.0</b>.</dd>
+        <dt>Still stuck?</dt>
+        <dd>Update the browser, or try another one. Firefox keeps WebGL working even with hardware acceleration off.</dd>
+      </dl>
+    </div>
     <iframe id="m-frame" title="" allow="autoplay; fullscreen; gamepad"></iframe>
   </div>
 </div>
@@ -217,13 +243,19 @@ for (const g of GAMES) {
   el.querySelector("button").addEventListener("click", () => openGame(g));
   grid.appendChild(el);
 }
-const modal = document.getElementById("modal"), frame = document.getElementById("m-frame");
+const modal = document.getElementById("modal"), frame = document.getElementById("m-frame"), notice = document.getElementById("m-webgl");
+function hasWebGL2() {
+  if (location.search.includes("nowebgl")) return false;           // for testing the notice
+  try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2")); } catch { return false; }
+}
 function openGame(g) {
   const url = `/${g.id}/index.html`;
+  const ok = hasWebGL2();
+  notice.hidden = ok; frame.hidden = !ok;
   document.getElementById("m-title").textContent = g.title;
   const s = document.getElementById("m-season"); s.textContent = g.season; s.style.background = g.accent;
   document.getElementById("m-open").href = url;
-  frame.title = g.title; frame.src = url;
+  frame.title = g.title; frame.src = ok ? url : "about:blank";
   modal.setAttribute("open", ""); document.body.style.overflow = "hidden";
   history.replaceState(null, "", "#" + g.id);
 }
