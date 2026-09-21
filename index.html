@@ -47,6 +47,9 @@
   .btn:hover{background:var(--red-dark);transform:translateY(-1px)}
   h2.sec{font-size:clamp(2rem,4vw,2.7rem);line-height:1.15;letter-spacing:-.04em;margin:0 0 .65rem}
   .lead{color:var(--mist);max-width:48rem;margin:0 0 36px;font-size:1.02rem}
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:36px}
+  .section-head .lead{margin-bottom:0}
+  .compat{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:#fff;padding:.52rem .85rem;color:var(--mist);font-size:.78rem;font-weight:700;white-space:nowrap}
   .grid{display:grid;gap:26px;grid-template-columns:repeat(2,minmax(0,1fr))}
   .game{overflow:hidden;transition:transform .2s,box-shadow .2s}
   .game:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(31,39,36,.12)}
@@ -94,7 +97,6 @@
   .webgl dt{font-weight:700}
   .webgl dd{margin:.2rem 0 0;color:var(--mist);font-size:.95rem}
   .webgl code{background:var(--muted);border:1px solid #e5e2dc;border-radius:4px;padding:0 .3em;font-size:.9em}
-  .req{margin:14px 0 0;font-size:.85rem;color:var(--mist)}
   :focus-visible{outline:3px solid #d39b45;outline-offset:3px}
   @media(max-width:760px){
     .wrap{width:min(100% - 28px,1160px)}
@@ -106,6 +108,7 @@
     section{padding:56px 0}
     .banner{padding:25px 22px;margin-bottom:48px}
     .banner-copy{gap:14px}
+    .section-head{align-items:flex-start;flex-direction:column;gap:16px}
     .grid,.three,.video-grid{grid-template-columns:1fr}
     .video-grid{gap:30px}
     .bar a{display:none}
@@ -178,11 +181,15 @@
 
 <section class="alt" id="games-section">
   <div class="wrap">
-    <h2 class="sec">A year on the Chain</h2>
-    <p class="lead">Each short chapter turns one biological fact into a playable consequence, from choosing a spring nest site to making the fall takeoff. Play in your browser with no installation required.</p>
+    <div class="section-head">
+      <div>
+        <h2 class="sec">A year on the Chain</h2>
+        <p class="lead">Each short chapter turns one biological fact into a playable consequence, from choosing a spring nest site to making the fall takeoff. Play in your browser with no installation required.</p>
+      </div>
+      <span class="compat">Browser-based · WebGL2</span>
+    </div>
 
     <div class="grid" id="games"></div>
-    <p class="req">The games need WebGL2, which every current browser has on by default. If a game shows an error instead of a lake, the player will tell you how to turn it on.</p>
     <p class="credit">Developed based on concepts and chapters from <em>Generative AI for Game Development: Crafting Narrative Worlds with Machines</em> by Shesh Narayan Gupta · DOI: 10.1007/979-8-8688-2439-5</p>
   </div>
 </section>
